@@ -17,6 +17,12 @@ app.listen(serverConfig.PORT, ()=>{
         company:'GO',
         position:'SDET',
         location:'ggn'
-    })
+    },2);
+    sampleQueueProducer('SampleJob',{
+        name:'soujash',
+        company:'wishlink',
+        position:'sde',
+        location:'ggn'
+    },1);
 })
 

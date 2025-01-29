@@ -1,4 +1,5 @@
-import express from 'express';
+import express,{Express} from 'express';
+import bodyParser from 'body-parser';
 
 
 import serverConfig from './config/serverConfig';
@@ -8,7 +9,12 @@ import SampleWorker from './workers/SampleWorker';
 import serverAdapter from './config/bullBoardConfig';
 
 
-const app = express();
+const app:Express = express();
+app.use(bodyParser.text ())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended : true }))
+
+
 app.use('/api', apiRouter)
 app.use('/ui', serverAdapter.getRouter())
 app.listen(serverConfig.PORT, ()=>{

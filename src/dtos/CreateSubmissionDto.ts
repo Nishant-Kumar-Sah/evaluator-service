@@ -12,4 +12,4 @@ export const createSubmissionZodSchema = z.object({
     problemId: z.string(),
     code: z.string(),
     language: z.string()
-}).strict();  
+}).strict();

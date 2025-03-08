@@ -7,6 +7,7 @@ import apiRouter from './routes';
 import sampleQueueProducer from './producers/sampleQueueProducer';
 import SampleWorker from './workers/SampleWorker';
 import serverAdapter from './config/bullBoardConfig';
+import runPython from './containers/runPythonDocker';
 
 
 const app:Express = express();
@@ -20,17 +21,28 @@ app.use('/ui', serverAdapter.getRouter())
 app.listen(serverConfig.PORT, ()=>{
     console.log(`Server started on port ${serverConfig.PORT}`);
     SampleWorker('SampleQueue')
-    sampleQueueProducer('SampleJob',{
-        name:'Nishant',
-        company:'GO',
-        position:'SDET',
-        location:'ggn'
-    },2);
-    sampleQueueProducer('SampleJob',{
-        name:'soujash',
-        company:'wishlink',
-        position:'sde',
-        location:'ggn'
-    },1);
+    // sampleQueueProducer('SampleJob',{
+    //     name:'Nishant',
+    //     company:'GO',
+    //     position:'SDET',
+    //     location:'ggn'
+    // },2);
+    // sampleQueueProducer('SampleJob',{
+    //     name:'soujash',
+    //     company:'wishlink',
+    //     position:'sde',
+    //     location:'ggn'
+    // },1);
+
+
+    const code = `x=input()
+y=input()
+print("value of x is: " , x)
+print("value of y is: " , y)
+`;
+
+    const inputCase = `100
+200`
+    runPython(code,inputCase)
 })
 

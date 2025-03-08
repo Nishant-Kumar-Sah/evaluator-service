@@ -20,9 +20,11 @@
   },
   "dependencies": {
     "@bull-board/express": "^6.7.1",
+    "@types/dockerode": "^3.3.34",
     "@types/ioredis": "^4.28.10",
     "bullmq": "^5.36.0",
     "concurrently": "^9.1.2",
+    "dockerode": "^4.0.4",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "ioredis": "^5.4.2",

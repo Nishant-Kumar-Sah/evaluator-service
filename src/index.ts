@@ -10,6 +10,9 @@ import serverAdapter from './config/bullBoardConfig';
 import runPython from './containers/runPythonDocker';
 import runJava from './containers/runJavaDocker';
 import runCpp from './containers/runCppDocker';
+import SubmissionWorker from './workers/SubmissionWorker';
+import { submission_queue } from './utils/constants';
+import submissionQueueProducer from './producers/submissionQueueProducer';
 
 
 const app:Express = express();
@@ -23,6 +26,7 @@ app.use('/ui', serverAdapter.getRouter())
 app.listen(serverConfig.PORT, ()=>{
     console.log(`Server started on port ${serverConfig.PORT}`);
     SampleWorker('SampleQueue')
+    SubmissionWorker(submission_queue)
     // sampleQueueProducer('SampleJob',{
     //     name:'Nishant',
     //     company:'GO',
@@ -66,6 +70,13 @@ app.listen(serverConfig.PORT, ()=>{
     `
 
     const inputCase = `5`
+
+    submissionQueueProducer({"1234":{
+            language:"CPP",
+            inputCase,
+            code
+        }
+    })
     runCpp(code,inputCase)
 })
 

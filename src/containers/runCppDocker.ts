@@ -24,16 +24,18 @@ async function runCpp(code: string, inputTestCase: String) {
         rawLogBuffer.push(chunk)
     })
 
-    await new Promise((resolve, reject) =>{
+    const response = await new Promise((resolve, reject) =>{
         loggerStream.on('end', () => {
             console.log("Raw Log buffer", rawLogBuffer)
             const completeBuffer = Buffer.concat(rawLogBuffer)
             const decodedStream = decodeDockerStream(completeBuffer)
             console.log('Decoded Buffer', decodedStream)
             console.log('Decode dStream stdout', decodedStream.stdout)
+            resolve(decodedStream)
         })
     })
     await cppDockerContainer.remove()
+    return response
 }
 
 export default runCpp

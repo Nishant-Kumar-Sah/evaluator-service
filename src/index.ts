@@ -8,6 +8,8 @@ import sampleQueueProducer from './producers/sampleQueueProducer';
 import SampleWorker from './workers/SampleWorker';
 import serverAdapter from './config/bullBoardConfig';
 import runPython from './containers/runPythonDocker';
+import runJava from './containers/runJavaDocker';
+import runCpp from './containers/runCppDocker';
 
 
 const app:Express = express();
@@ -35,14 +37,35 @@ app.listen(serverConfig.PORT, ()=>{
     // },1);
 
 
-    const code = `x=input()
-y=input()
-print("value of x is: " , x)
-print("value of y is: " , y)
-`;
+//     const code = `
+//     import java.util.*;
+//     public class Main{
+//         public static void main(String[] args) {
+//             Scanner S1 = new Scanner(System.in);
+//             int input = S1.nextInt();
+//             System.out.println("Input given by user : " + input);
+//             for(int i = 0; i < input; i++) {
+//                 System.out.println(i);
+//             }
+//         }
+//     }
+// `;
 
-    const inputCase = `100
-200`
-    runPython(code,inputCase)
+    const code = `
+    #include <iostream>
+    using namespace std;
+    int main() {
+        int input;
+        cin >> input;
+        cout << "Number input by user:" << input<<endl;
+        for(int i = 0; i < input; i++) {
+            cout << i << endl;
+        }
+        return 0;
+    }
+    `
+
+    const inputCase = `5`
+    runCpp(code,inputCase)
 })
 

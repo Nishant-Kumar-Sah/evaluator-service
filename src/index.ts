@@ -13,6 +13,7 @@ import runCpp from './containers/cppExecutor';
 import SubmissionWorker from './workers/SubmissionWorker';
 import { submission_queue } from './utils/constants';
 import submissionQueueProducer from './producers/submissionQueueProducer';
+import CppExecutor from './containers/cppExecutor';
 
 
 const app:Express = express();
@@ -77,6 +78,6 @@ app.listen(serverConfig.PORT, ()=>{
             code
         }
     })
-    runCpp(code,inputCase)
+    // new CppExecutor(code,inputCase)
 })
 

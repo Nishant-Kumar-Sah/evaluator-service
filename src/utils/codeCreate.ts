@@ -1,9 +1,9 @@
-export default CodeCreator (startingCode: string, middleCode: string, endCode: string) : string {
+export default function CodeCreator (startingCode: string, middleCode: string, endCode: string) : string {
     return `
         ${startingCode}
 
         ${middleCode}
 
-        ${endCO}
+        ${endCode}
     `
 }

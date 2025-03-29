@@ -13,6 +13,7 @@ export default class SampleJob implements IJob {
         console.log(this.payload)
         if(job) {
             console.log(job.id, job.name, job.data)
+            // console.log(job)
         }
     }
     failed =(job? : Job): void => {

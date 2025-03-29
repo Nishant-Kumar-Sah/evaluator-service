@@ -6,7 +6,7 @@ import pullImage from "./pullImage";
 
 class JavaExecutor implements CodeExecutorStrategy {
 
-    async execute(code: string, inputTestCase: string): Promise<ExecutionResponse> {
+    async execute(code: string, inputTestCase: string, outputTestCase: string): Promise<ExecutionResponse> {
         const rawLogBuffer: Buffer[] = [];
         await pullImage(JAVA_IMAGE)
 

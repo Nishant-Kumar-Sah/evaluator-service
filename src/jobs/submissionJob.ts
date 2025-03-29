@@ -18,13 +18,15 @@ export default class SubmissionJob implements IJob {
         if(job) {
             const key = Object.keys(this.payload)[0];
             const inputTestCase = this.payload[key].inputCase
+            console.log(inputTestCase)
+            const outputTestCase = this.payload[key].outputCase
             const codeLanguage = this.payload[key].language
             const code = this.payload[key].code
             console.log(`Language : ${codeLanguage}`)
             
             const strategy = createExecutor(codeLanguage);
             if(strategy != null){
-                const response: ExecutionResponse = await strategy.execute(code, inputTestCase)
+                const response: ExecutionResponse = await strategy.execute(code, inputTestCase,outputTestCase)
                 if( response.status === "COMPLETED") {
                     console.log("Code executed successfully")
                     console.log(response)

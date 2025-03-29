@@ -70,14 +70,14 @@ app.listen(serverConfig.PORT, ()=>{
     }
     `
 
-    const inputCase = `5`
+    // const inputCase = `5`
 
-    submissionQueueProducer({"1234":{
-            language:"CPP",
-            inputCase,
-            code
-        }
-    })
+    // submissionQueueProducer({"1234":{
+    //         language:"CPP",
+    //         inputCase,
+    //         code
+    //     }
+    // })
     // new CppExecutor(code,inputCase)
 })
 

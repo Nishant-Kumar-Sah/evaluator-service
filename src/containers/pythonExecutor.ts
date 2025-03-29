@@ -8,7 +8,7 @@ import { decodeDockerStream } from './dockerHelper';
 import CodeExecutorStrategy, { ExecutionResponse } from '../types/codeEexecutorStrategy';
 
 class PythonExecutor implements CodeExecutorStrategy {
-    async execute(code: string, inputTestCase: string): Promise<ExecutionResponse> {
+    async execute(code: string, inputTestCase: string,outputTestCase: string): Promise<ExecutionResponse> {
         const rawLogBuffer : Buffer[] =[]
         await pullImage(PYTHON_IMAGE);
 

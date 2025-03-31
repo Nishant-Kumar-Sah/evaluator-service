@@ -3,6 +3,7 @@ import { JAVA_IMAGE } from "../utils/constants";
 import createContainer from "./containerFactory";
 import { decodeDockerStream } from "./dockerHelper";
 import pullImage from "./pullImage";
+import Dockerode from 'dockerode'
 
 class JavaExecutor implements CodeExecutorStrategy {
 
@@ -36,6 +37,10 @@ class JavaExecutor implements CodeExecutorStrategy {
             else 
                 return {output: codeResponse, status: "WA"}
         }catch (error){
+            console.log('Error Occured: ', error)
+            if(error === "TLE") {
+                await javaDockerContainer.kill()
+            }
             return {output: error as string, status: "ERROR"}
 
         }finally{
@@ -43,9 +48,15 @@ class JavaExecutor implements CodeExecutorStrategy {
         }
             
     }
+        // move this to utils file
         fetchDecodedStream(loggerStream: NodeJS.ReadableStream, rawLogBuffer: Buffer[]):Promise<string>{
             return new Promise((resolve, reject)=>{
+                const timeout = setTimeout(() => {
+                    console.log("Timeout Called");
+                    reject('TLE')
+                },2000)
                 loggerStream.on('end', () => {
+                    clearTimeout(timeout)
                     console.log('Raw Log Buffer', rawLogBuffer)
                     const completeBuffer = Buffer.concat(rawLogBuffer)
                     const decodedStream = decodeDockerStream(completeBuffer)

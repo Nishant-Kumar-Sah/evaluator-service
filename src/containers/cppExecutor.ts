@@ -3,6 +3,8 @@ import { CPP_IMAGE } from "../utils/constants"
 import createContainer from "./containerFactory";
 import { decodeDockerStream } from "./dockerHelper";
 import pullImage from "./pullImage"
+import Dockerode from 'dockerode'
+
 
 
 class CppExecutor implements CodeExecutorStrategy{
@@ -35,6 +37,10 @@ class CppExecutor implements CodeExecutorStrategy{
             else 
                 return {output: codeResponse, status: "WA"}
         }catch (error){
+            console.log('Error Occured: ', error)
+            if(error === "TLE") {
+                await cppDockerContainer.kill()
+            }
             return {output: error as string, status: "ERROR"}
         }finally {
             await cppDockerContainer.remove()
@@ -42,7 +48,12 @@ class CppExecutor implements CodeExecutorStrategy{
     }
     fetchDecodedStream(loggerStream: NodeJS.ReadableStream, rawLogBuffer: Buffer[]):Promise<string>{
         return  new Promise((resolve, reject) =>{
+            const timeout = setTimeout(() => {
+                console.log("Timeout Called");
+                reject('TLE')
+            },2000)
             loggerStream.on('end', () => {
+                clearTimeout(timeout)
                 console.log("Raw Log buffer", rawLogBuffer)
                 const completeBuffer = Buffer.concat(rawLogBuffer)
                 const decodedStream = decodeDockerStream(completeBuffer)

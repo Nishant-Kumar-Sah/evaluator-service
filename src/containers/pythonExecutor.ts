@@ -37,6 +37,9 @@ class PythonExecutor implements CodeExecutorStrategy {
             else 
                 return {output: codeResponse, status: "WA"}
         }catch(error) {
+            if(error === "TLE"){
+                await pythonDockerContainer.kill()
+            }
             return {output: error as string, status:"ERROR"}
         }finally{
             await pythonDockerContainer.remove()
@@ -45,6 +48,10 @@ class PythonExecutor implements CodeExecutorStrategy {
 
     fetchDecodedStream(loggerStream: NodeJS.ReadableStream, rawLogBuffer: Buffer[]):Promise<string>{
         return new Promise((res, reject)=>{
+            const timeout = setTimeout(() => {
+                console.log("Timeout Called")
+                reject("TLE")
+            }, 2000)
             loggerStream.on('end',() =>{
                 console.log("Raw Log buffer" ,rawLogBuffer)
                 const completeBuffer = Buffer.concat(rawLogBuffer)

@@ -4,12 +4,13 @@ import { ExpressAdapter } from '@bull-board/express'
 
 import sampleQueue from '../queues/sampleQueue'
 import SubmissionQueue from '../queues/submissionQueue'
+import evalutationQueue from '../queues/evalutationQueue'
 
 const serverAdapter = new ExpressAdapter();
 serverAdapter.setBasePath('/ui')
 
 createBullBoard({
-    queues: [new BullMQAdapter(sampleQueue), new BullMQAdapter(SubmissionQueue) ],
+    queues: [new BullMQAdapter(sampleQueue), new BullMQAdapter(SubmissionQueue), new BullMQAdapter(evalutationQueue) ],
     serverAdapter: serverAdapter,
   });
 

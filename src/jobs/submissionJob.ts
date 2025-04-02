@@ -4,6 +4,7 @@ import { SubmissionPayload } from "../types/submissionPayload";
 import runCpp from "../containers/cppExecutor";
 import createExecutor from "../utils/ExecutorFactory";
 import { ExecutionResponse } from "../types/codeEexecutorStrategy";
+import evaluationQueueProducer from "../producers/evaluationQueueProducer";
 
 export default class SubmissionJob implements IJob {
     name: string;
@@ -27,6 +28,11 @@ export default class SubmissionJob implements IJob {
             const strategy = createExecutor(codeLanguage);
             if(strategy != null){
                 const response: ExecutionResponse = await strategy.execute(code, inputTestCase,outputTestCase)
+                evaluationQueueProducer({
+                    response,
+                    userId: this.payload[key].userId,
+                    submissionId: this.payload[key].submissionId
+                })
                 if( response.status === "SUCCESS") {
                     console.log("Code executed successfully")
                     console.log(response)
@@ -36,6 +42,7 @@ export default class SubmissionJob implements IJob {
                 }
             }
         }
+        return true
     }
     failed =(job? : Job): void => {
         console.log("Job failed")

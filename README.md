@@ -37,5 +37,62 @@ The **Evaluator Service** is a core component of the Remote Code Execution platf
    - The buffer is decoded using a utility method to get stdout and stderr.
 
 6. **Output Evaluation**
-   - Container logs are captured via a loggerStream in chunks.
-   - The buffer is decoded using a utility method to get stdout and stderr.
+   - The decoded output is matched against the expected output.
+   - Response status is determined as:
+     - SUCCESS – Output matches
+     - WA - Wrong Answer
+     - ERROR - Runtime or Compile Error
+     - TLE - Timit Limit Exceeded
+      
+7. **Response Dispatch**
+   - After evaluation, the result is sent to the Redis Evaluation Queue.
+   - The Submission Service consumes this to update submission status in DB.
+
+8. **Bull Board Ui**
+   - UI page to view the status of the Jobs in Redis Queue. (/ui)
+  
+## ✨ Running Locally
+
+### 🧱  Prerequisites
+
+- Node.js (v16+)
+
+- Redis Connection
+
+### 📦 Installation
+1. Clone the Repository
+   ```
+   git clone <repo-url>
+   cd evaluator-service
+   ```
+2. Install dependencies
+   ```
+   npm install
+   ```
+3. Setup .env file
+4. Run the Service
+    ```
+    npm run dev 
+    ```
+5. Verify the service
+     ```
+     http://localhost:8080/ping
+     ```
+6. Bull Board UI
+   ```
+   http://localhost:8080/ui
+   ```
+
+# 🚀 Future Enhancements
+
+- Remove Dockerode Dependency
+- Support for More Languages
+- Multi-Queue Load Balancing
+- Queue Prioritization for Premium Users
+- Testing & Validation (Unit Tests, Component Tests, Load Testing with K6)
+- Branching Strategy for CI/CD (Develop, Release, Cherry-pick Bug Fixes)
+- CI/CD Integration and Deployment
+
+
+
+

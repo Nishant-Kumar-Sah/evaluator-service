@@ -51,6 +51,9 @@ The **Evaluator Service** is a core component of the Remote Code Execution platf
 8. **Bull Board Ui**
    - UI page to view the status of the Jobs in Redis Queue. (/ui)
   
+     ![image](https://github.com/user-attachments/assets/1670ce55-2dc7-43fe-8684-055dd57f90e6)
+
+  
 ## ✨ Running Locally
 
 ### 🧱  Prerequisites
